@@ -2,7 +2,7 @@
 
 LIBGIT2SHA=`cat ./LibGit2Sharp/libgit2_hash.txt`
 SHORTSHA=${LIBGIT2SHA:0:7}
-
+USESSH=${1-OFF}
 rm -rf libgit2/build
 mkdir libgit2/build
 pushd libgit2/build
@@ -11,7 +11,7 @@ export _BINPATH=`pwd`
 cmake -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
       -DTHREADSAFE:BOOL=ON \
       -DBUILD_CLAR:BOOL=OFF \
-      -DUSE_SSH=OFF \
+      -DUSE_SSH=$USESSH \
       -DLIBGIT2_FILENAME=git2-$SHORTSHA \
       -DCMAKE_OSX_ARCHITECTURES="i386;x86_64" \
       ..

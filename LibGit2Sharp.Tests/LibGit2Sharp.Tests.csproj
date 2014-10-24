@@ -150,4 +150,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <EmbeddedResource Include="ssh_used.txt" />
+  </ItemGroup>
 </Project>
