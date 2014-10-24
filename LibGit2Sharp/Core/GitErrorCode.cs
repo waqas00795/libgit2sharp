@@ -71,6 +71,16 @@
         Modified = -15,
 
         /// <summary>
+        /// Authentication error.
+        /// </summary>
+        Auth = -16,
+
+        /// <summary>
+        /// Server certificate is invalid.
+        /// </summary>
+        Certificate = -17,
+
+        /// <summary>
         /// Skip and passthrough the given ODB backend.
         /// </summary>
         PassThrough = -30,
