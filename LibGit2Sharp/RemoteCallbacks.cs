@@ -179,6 +179,14 @@ namespace LibGit2Sharp
             {
                 types |= SupportedCredentialTypes.Default;
             }
+            if (credTypes.HasFlag(GitCredentialType.SshKey))
+            {
+                types |= SupportedCredentialTypes.Ssh;
+            }
+            if (credTypes.HasFlag(GitCredentialType.SshUsername))
+            {
+                types |= SupportedCredentialTypes.SshUsername;
+            }
 
             var cred = CredentialsProvider(url, username, types);
 
