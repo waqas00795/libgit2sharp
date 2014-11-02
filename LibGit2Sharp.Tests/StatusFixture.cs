@@ -538,6 +538,28 @@ namespace LibGit2Sharp.Tests
         }
 
         [Fact]
+        public void CanRetrieveTheStatusOfARelativeWorkingDirectory()
+        {
+            string path = CloneStandardTestRepo();
+            using (var repo = new Repository(path))
+            {
+                const string file = "just_a_dir/other.txt";
+                const string otherFile = "just_a_dir/another_dir/other.txt";
+
+                Touch(repo.Info.WorkingDirectory, file);
+                Touch(repo.Info.WorkingDirectory, otherFile);
+
+                RepositoryStatus status = repo.Index.RetrieveStatus(new StatusOptions() { PathSpec = new[] { "just_a_dir" } });
+                Assert.Equal(2, status.Count());
+                Assert.Equal(2, status.Untracked.Count());
+
+                status = repo.Index.RetrieveStatus(new StatusOptions() { PathSpec = new[] { "just_a_dir/another_dir" } });
+                Assert.Equal(1, status.Count());
+                Assert.Equal(1, status.Untracked.Count());
+            }
+        }
+
+        [Fact]
         public void CanIncludeStatusOfUnalteredFiles()
         {
             string path = CloneStandardTestRepo();

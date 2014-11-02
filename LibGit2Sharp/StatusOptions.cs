@@ -68,6 +68,11 @@ namespace LibGit2Sharp
         public bool RecurseIgnoredDirs { get; set; }
 
         /// <summary>
+        /// Use relative pathspec.
+        /// </summary>
+        public string[] PathSpec { get; set; }
+
+        /// <summary>
         /// Include unaltered files when scanning for status
         /// </summary>
         public bool IncludeUnaltered { get; set; }
