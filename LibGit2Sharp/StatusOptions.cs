@@ -73,6 +73,11 @@ namespace LibGit2Sharp
         public string[] PathSpec { get; set; }
 
         /// <summary>
+        /// PathSpec requires exact matches
+        /// </summary>
+        public bool DisablePathSpecMatch { get; set; }
+
+        /// <summary>
         /// Include unaltered files when scanning for status
         /// </summary>
         public bool IncludeUnaltered { get; set; }
