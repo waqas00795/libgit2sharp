@@ -536,5 +536,26 @@ namespace LibGit2Sharp.Tests
                 Assert.Equal(expected, status.Modified.Select(x => x.FilePath).ToArray());
             }
         }
+
+        [Fact]
+        public void CanIncludeStatusOfUnalteredFiles()
+        {
+            string path = CloneStandardTestRepo();
+            string[] unalteredPaths = {
+                "1.txt",
+                "1/branch_file.txt",
+                "branch_file.txt",
+                "new.txt",
+                "README",
+            };
+
+            using (var repo = new Repository(path))
+            {
+                RepositoryStatus status = repo.RetrieveStatus(new StatusOptions() { IncludeUnaltered = true });
+
+                Assert.Equal(unalteredPaths.Length, status.Unaltered.Count());
+                Assert.Equal(unalteredPaths, status.Unaltered.OrderBy(s => s.FilePath).Select(s => s.FilePath));
+            }
+        }
     }
 }
