@@ -66,5 +66,10 @@ namespace LibGit2Sharp
         /// Recurse into ignored directories
         /// </summary>
         public bool RecurseIgnoredDirs { get; set; }
+
+        /// <summary>
+        /// Include unaltered files when scanning for status
+        /// </summary>
+        public bool IncludeUnaltered { get; set; }
     }
 }

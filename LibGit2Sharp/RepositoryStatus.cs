@@ -26,6 +26,7 @@ namespace LibGit2Sharp
         private readonly List<StatusEntry> ignored = new List<StatusEntry>();
         private readonly List<StatusEntry> renamedInIndex = new List<StatusEntry>();
         private readonly List<StatusEntry> renamedInWorkDir = new List<StatusEntry>();
+        private readonly List<StatusEntry> unaltered = new List<StatusEntry>();
         private readonly bool isDirty;
 
         private readonly IDictionary<FileStatus, Action<RepositoryStatus, StatusEntry>> dispatcher = Build();
@@ -42,7 +43,8 @@ namespace LibGit2Sharp
                            { FileStatus.Removed, (rs, s) => rs.removed.Add(s) },
                            { FileStatus.RenamedInIndex, (rs, s) => rs.renamedInIndex.Add(s) },
                            { FileStatus.Ignored, (rs, s) => rs.ignored.Add(s) },
-                           { FileStatus.RenamedInWorkDir, (rs, s) => rs.renamedInWorkDir.Add(s) }
+                           { FileStatus.RenamedInWorkDir, (rs, s) => rs.renamedInWorkDir.Add(s) },
+                           { FileStatus.Unaltered, (rs, s) => rs.unaltered.Add(s) },
                        };
         }
 
@@ -81,7 +83,7 @@ namespace LibGit2Sharp
                     AddStatusEntryForDelta(entry.Status, deltaHeadToIndex, deltaIndexToWorkDir);
                 }
 
-                isDirty = statusEntries.Any(entry => entry.State != FileStatus.Ignored);
+                isDirty = statusEntries.Any(entry => entry.State != FileStatus.Ignored || entry.State != FileStatus.Unaltered);
             }
         }
 
@@ -121,6 +123,12 @@ namespace LibGit2Sharp
             {
                 coreOptions.Flags |=
                     GitStatusOptionFlags.RecurseIgnoredDirs;
+            }
+
+            if (options.IncludeUnaltered)
+            {
+                coreOptions.Flags |=
+                    GitStatusOptionFlags.IncludeUnmodified;
             }
 
             return coreOptions;
@@ -276,6 +284,14 @@ namespace LibGit2Sharp
         public virtual IEnumerable<StatusEntry> RenamedInWorkDir
         {
             get { return renamedInWorkDir; }
+        }
+
+        /// <summary>
+        /// List of files that were unmodified in the working directory.
+        /// </summary>
+        public virtual IEnumerable<StatusEntry> Unaltered
+        {
+            get { return unaltered; }
         }
 
         /// <summary>
