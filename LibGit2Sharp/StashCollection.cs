@@ -114,6 +114,36 @@ namespace LibGit2Sharp
             Proxy.git_stash_drop(repo.Handle, index);
         }
 
+		/// <summary>
+		/// Apply a single stash to the repository.
+		/// </summary>
+		/// <param name="index">The index of the stash to remove (0 being the most recent one).</param>
+		/// <param name="reinstateIndex">Whether to stage the items or not.</param>
+	    public virtual void Apply(int index, bool reinstateIndex)
+	    {
+			if (index < 0)
+			{
+				throw new ArgumentException("The passed index must be a positive integer.", "index");
+			}
+
+			Proxy.git_stash_apply(repo.Handle, index, reinstateIndex);
+	    }
+
+		/// <summary>
+		/// Applies a stash to the repository and drops it.
+		/// </summary>
+		/// <param name="index">The index of the stash to remove (0 being the most recent one).</param>
+		/// <param name="reinstateIndex">Whether to stage the items or not.</param>
+		public virtual void Pop(int index, bool reinstateIndex)
+		{
+			if (index < 0)
+			{
+				throw new ArgumentException("The passed index must be a positive integer.", "index");
+			}
+
+			Proxy.git_stash_pop(repo.Handle, index, reinstateIndex);
+		}
+
         private string DebuggerDisplay
         {
             get

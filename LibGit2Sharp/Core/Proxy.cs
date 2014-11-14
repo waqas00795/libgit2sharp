@@ -2647,6 +2647,24 @@ namespace LibGit2Sharp.Core
             }
         }
 
+		public static void git_stash_apply(RepositorySafeHandle repo, int index, bool stage)
+		{
+			using (ThreadAffinity())
+			{
+				int res = NativeMethods.git_stash_apply(repo, (UIntPtr)index, stage);
+				Ensure.BooleanResult(res);
+			}
+		}
+
+		public static void git_stash_pop(RepositorySafeHandle repo, int index, bool stage)
+		{
+			using (ThreadAffinity())
+			{
+				int res = NativeMethods.git_stash_pop(repo, (UIntPtr)index, stage);
+				Ensure.BooleanResult(res);
+			}
+		}
+
         #endregion
 
         #region git_status_
