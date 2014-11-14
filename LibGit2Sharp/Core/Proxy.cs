@@ -2099,12 +2099,12 @@ namespace LibGit2Sharp.Core
             return refs;
         }
 
-        public static RemoteSafeHandle git_remote_load(RepositorySafeHandle repo, string name, bool throwsIfNotFound)
+        public static RemoteSafeHandle git_remote_lookup(RepositorySafeHandle repo, string name, bool throwsIfNotFound)
         {
             using (ThreadAffinity())
             {
                 RemoteSafeHandle handle;
-                int res = NativeMethods.git_remote_load(out handle, repo, name);
+                int res = NativeMethods.git_remote_lookup(out handle, repo, name);
 
                 if (res == (int)GitErrorCode.NotFound && !throwsIfNotFound)
                 {
