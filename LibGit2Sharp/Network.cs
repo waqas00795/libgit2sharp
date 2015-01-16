@@ -344,7 +344,7 @@ namespace LibGit2Sharp
             }
 
             Fetch(currentBranch.Remote, options.FetchOptions);
-            return repository.MergeFetchHeads(merger, options.MergeOptions);
+            return repository.MergeFetchedRefs(merger, options.MergeOptions);
         }
 
         /// <summary>
