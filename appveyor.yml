@@ -21,8 +21,10 @@ build_script:
 - msbuild "C:\projects\libgit2sharp\LibGit2Sharp.sln" /verbosity:normal /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /property:ExtraDefine="LEAKS_IDENTIFYING"
 
 test_script:
-- '"C:\projects\libgit2sharp\packages\xunit.runners.2.0.0-beta5-build2785\tools\%xunit_runner%"  "C:\projects\libgit2sharp\LibGit2Sharp.Tests\bin\Release\LibGit2Sharp.Tests.dll"'
-- IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
+- ps: >-
+    [Environment]::SetEnvironmentVariable('APPVEYOR_API_URL', $null)
+
+    Invoke-Expression "C:\projects\libgit2sharp\packages\xunit.runners.2.0.0-beta5-build2785\tools\$Env:xunit_runner C:\projects\libgit2sharp\LibGit2Sharp.Tests\bin\Release\LibGit2Sharp.Tests.dll"
 
 notifications:
 - provider: Email
