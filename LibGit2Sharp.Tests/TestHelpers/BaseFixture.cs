@@ -39,6 +39,8 @@ namespace LibGit2Sharp.Tests.TestHelpers
         public static string RevertTestRepoWorkingDirPath { get; private set; }
         public static string SubmoduleTestRepoWorkingDirPath { get; private set; }
         private static string SubmoduleTargetTestRepoWorkingDirPath { get; set; }
+        public static string SubmoduleSmallTestRepoWorkingDirPath { get; private set; }
+
         public static DirectoryInfo ResourcesDirectory { get; private set; }
 
         public static bool IsFileSystemCaseSensitive { get; private set; }
@@ -67,6 +69,7 @@ namespace LibGit2Sharp.Tests.TestHelpers
             RevertTestRepoWorkingDirPath = Path.Combine(sourceRelativePath, "revert_testrepo_wd");
             SubmoduleTestRepoWorkingDirPath = Path.Combine(sourceRelativePath, "submodule_wd");
             SubmoduleTargetTestRepoWorkingDirPath = Path.Combine(sourceRelativePath, "submodule_target_wd");
+            SubmoduleSmallTestRepoWorkingDirPath = Path.Combine(ResourcesDirectory.FullName, "submodule_small_wd");
         }
 
         private static bool IsFileSystemCaseSensitiveInternal()
@@ -145,6 +148,15 @@ namespace LibGit2Sharp.Tests.TestHelpers
         public string SandboxSubmoduleTestRepo()
         {
             return Sandbox(SubmoduleTestRepoWorkingDirPath, SubmoduleTargetTestRepoWorkingDirPath);
+        }
+
+        public string SandboxSubmoduleSmallTestRepo()
+        {
+            var submoduleTarget = Path.Combine(ResourcesDirectory.FullName, "submodule_target_wd");
+            var path = Sandbox(SubmoduleSmallTestRepoWorkingDirPath, submoduleTarget);
+            Directory.CreateDirectory(Path.Combine(path, "submodule_target_wd"));
+
+            return path;
         }
 
         protected string Sandbox(string sourceDirectoryPath, params string[] additionalSourcePaths)
