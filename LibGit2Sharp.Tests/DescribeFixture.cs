@@ -14,14 +14,14 @@ namespace LibGit2Sharp.Tests
             {
                 // No annotated tags can be used to describe "master"
                 var masterTip = repo.Branches["master"].Tip;
-                Assert.Throws<LibGit2SharpException>(() => repo.Describe(masterTip));
+                Assert.Throws<NotFoundException>(() => repo.Describe(masterTip));
                 Assert.Equal("4c062a6", repo.Describe(masterTip,
                     new DescribeOptions { UseCommitIdAsFallback = true }));
                 Assert.Equal("4c06", repo.Describe(masterTip,
                     new DescribeOptions { UseCommitIdAsFallback = true, MinimumCommitIdAbbreviatedSize = 2 }));
 
                 // No lightweight tags can either be used to describe "master"
-                Assert.Throws<LibGit2SharpException>(() => repo.Describe(masterTip,
+                Assert.Throws<NotFoundException>(() => repo.Describe(masterTip,
                     new DescribeOptions{ Strategy = DescribeStrategy.Tags }));
 
                 repo.ApplyTag("myTag", "5b5b025afb0b4c913b4c338a42934a3863bf3644");
