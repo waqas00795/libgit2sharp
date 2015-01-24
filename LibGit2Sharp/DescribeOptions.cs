@@ -24,7 +24,7 @@ namespace LibGit2Sharp
         }
 
         /// <summary>
-        /// The kind of references that will be elligible as reference points.
+        /// The kind of references that will be eligible as reference points.
         /// </summary>
         public DescribeStrategy Strategy { get; set; }
 

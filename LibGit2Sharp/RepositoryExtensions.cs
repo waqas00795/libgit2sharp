@@ -749,7 +749,7 @@ namespace LibGit2Sharp
         /// </summary>
         /// <param name="repository">The <see cref="IRepository"/> being worked with.</param>
         /// <param name="commit">The commit to be described.</param>
-        /// <returns>A formatted string providing </returns>
+        /// <returns>A descriptive identifier for the commit based on the nearest annotated tag.</returns>
         public static string Describe(this IRepository repository, Commit commit)
         {
             return repository.Describe(commit, new DescribeOptions());
